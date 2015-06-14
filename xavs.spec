@@ -1,19 +1,35 @@
-%lib_package xavs 1
+%global libver 1
 
 Summary: Audio Video Standard of China
 Name: xavs
 Version: 0.1.51
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://xavs.sourceforge.net/
 Source0: %{name}-trunk.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
-BuildRequires: atrpms-rpm-config
+Requires: %{name}-libs_%{libver}
 
 %description
 AVS is the Audio Video Standard of China.  This project aims to
 implement high quality AVS encoder and decoder.
+
+%package libs_%{libver}
+Summary: xavs codec shared library
+Group: Development/Libraries
+Obsoletes: libxavs*
+
+%description libs_%{libver}
+This package contains the xavs codec shared library
+
+%package devel
+Summary: xavs codec shared library development files
+Group: Development/Libraries
+Requires: %{name}-libs_%{libver}
+
+%description devel
+This package contain the xavs codec shared library development files
 
 %prep
 %setup -q -n trunk
@@ -31,6 +47,10 @@ rm -rf %{buildroot}
 make install \
   DESTDIR=%{buildroot}
 
+%post libs_%{libver} -p /sbin/ldconfig
+
+%postun libs_%{libver} -p /sbin/ldconfig
+
 %clean
 rm -rf %{buildroot}
 
@@ -39,7 +59,21 @@ rm -rf %{buildroot}
 %doc doc/*.txt
 %{_bindir}/xavs
 
+%files libs_%{libver}
+%defattr(-,root,root,-)
+%{_libdir}/libxavs.so.%{libver}
+
+%files devel
+%defattr(-,root,root,-)
+%{_includedir}/*
+%{_libdir}/*.a
+%{_libdir}/*.so
+%{_libdir}/pkgconfig/*
+
 %changelog
+* Sat Jun 13 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.1.51-4
+- Removed dependency on atrpms scripts to comply with ClearOS policy
+
 * Wed May 6 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.1.51-3
 - Added atrpms-rpm-config as buildrequirement
 
