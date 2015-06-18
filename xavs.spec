@@ -3,11 +3,11 @@
 Summary: Audio Video Standard of China
 Name: xavs
 Version: 0.1.51
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://xavs.sourceforge.net/
-Source0: %{name}-trunk.tar.gz
+Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: %{name}-libs_%{libver}
 
@@ -71,6 +71,9 @@ rm -rf %{buildroot}
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Thu Jun 18 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.1.51-5
+- Changed source file name to include version number to be accpted by the build system
+
 * Sat Jun 13 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.1.51-4
 - Removed dependency on atrpms scripts to comply with ClearOS policy
 
