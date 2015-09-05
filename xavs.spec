@@ -1,13 +1,14 @@
 %global libver 1
+%define trunkname xavs-code-51-trunk
 
 Summary: Audio Video Standard of China
 Name: xavs
 Version: 0.1.51
-Release: 5%{?dist}
+Release: 6%{?dist}
 License: GPL
 Group: System Environment/Libraries
 URL: http://xavs.sourceforge.net/
-Source0: %{name}-%{version}.tar.gz
+Source0: %{trunkname}.zip
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Requires: %{name}-libs_%{libver}
 
@@ -32,7 +33,7 @@ Requires: %{name}-libs_%{libver}
 This package contain the xavs codec shared library development files
 
 %prep
-%setup -q -n trunk
+%setup -q -n %{trunkname}
 
 %build
 export CFLAGS="%{optflags}"
@@ -71,6 +72,9 @@ rm -rf %{buildroot}
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Sat Sep 5 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.1.51-6
+- Changed source file
+
 * Thu Jun 18 2015 Fredrik Fornstad <fredrik.fornstad@gmail.com> - 0.1.51-5
 - Changed source file name to include version number to be accpted by the build system
 
